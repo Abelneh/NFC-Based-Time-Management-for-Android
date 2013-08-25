@@ -3,6 +3,8 @@ package com.abel.nfc.client;
 
 import java.util.concurrent.ExecutionException;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.PendingIntent;
@@ -27,6 +29,9 @@ public class NFCScanner extends Activity implements OnClickListener{
 
     private NfcAdapter mAdapter;
     private PendingIntent mPendingIntent;
+    private String nfcID = "Null";
+    private String googleAccount ; 
+    private AccountManager accountManager;
 
  
     //public static final String URL = "http://10.0.2.2:8888/nfcServer"; // for the emulator
@@ -43,6 +48,12 @@ public class NFCScanner extends Activity implements OnClickListener{
         outputText = (TextView) findViewById(R.id.outputTxt);
         btnPost.setOnClickListener(this);
         ////////////////////////
+        
+        accountManager = (AccountManager) getSystemService(ACCOUNT_SERVICE);
+        Account[] accountList = accountManager.getAccounts();
+        googleAccount = accountList[0].name;
+        
+        Toast.makeText(getApplicationContext(), googleAccount, Toast.LENGTH_SHORT).show();
 
         resolveIntent(getIntent());
      
@@ -63,7 +74,7 @@ public class NFCScanner extends Activity implements OnClickListener{
     public void onClick(View view) {
     	
     	NFCData nfcData = new NFCData();
-    	uploadStatus = nfcData.execute(URL,"000001","abelneh");
+    	uploadStatus = nfcData.execute(URL,nfcID,googleAccount);
     	try {
 			displayStaus(uploadStatus.get());
 		} catch (InterruptedException e) {
@@ -101,8 +112,9 @@ public class NFCScanner extends Activity implements OnClickListener{
                 || NfcAdapter.ACTION_TECH_DISCOVERED.equals(action)
                 || NfcAdapter.ACTION_NDEF_DISCOVERED.equals(action)) {
         	
-        	Tag scannedTag = getIntent().getParcelableExtra(NfcAdapter.EXTRA_TAG);       	        	
-            Toast.makeText(getApplicationContext(), "Scanned ID is: "+ getHex(scannedTag.getId()), Toast.LENGTH_SHORT).show();
+        	Tag scannedTag = getIntent().getParcelableExtra(NfcAdapter.EXTRA_TAG);
+        	nfcID = getHex(scannedTag.getId());
+            Toast.makeText(getApplicationContext(), "Scanned ID is: "+nfcID, Toast.LENGTH_SHORT).show();
         }
     }
 

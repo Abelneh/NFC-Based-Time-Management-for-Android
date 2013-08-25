@@ -1,0 +1,26 @@
+@CHARSET "ISO-8859-1";
+
+body {
+width: 100%;
+margin: auto;
+padding-left: 33%;
+}
+
+table 
+   {
+     background-color:#efefef;
+     margin: 1em; 
+     border-collapse: 
+     collapse; 
+  }
+  
+td, th { 
+	padding: .3em; 
+	border: 1px #ccc solid;
+	 width: 100px;
+ }
+ 
+	 
+thead {
+	background: #fc9; 
+  }
