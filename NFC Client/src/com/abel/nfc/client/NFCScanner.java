@@ -21,9 +21,8 @@ import android.widget.Toast;
 
 
 @SuppressLint("NewApi")
-public class NFCScanner extends Activity implements OnClickListener{
-	
-	Button btnPost;
+public class NFCScanner extends Activity {
+
     TextView outputText;
     AsyncTask<String, String, String> uploadStatus;
 
@@ -43,10 +42,8 @@ public class NFCScanner extends Activity implements OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nfc_client);
 
-        // we don't need this later
-        btnPost = (Button) findViewById(R.id.buttonPost);
+
         outputText = (TextView) findViewById(R.id.outputTxt);
-        btnPost.setOnClickListener(this);
         ////////////////////////
         
         accountManager = (AccountManager) getSystemService(ACCOUNT_SERVICE);
@@ -70,25 +67,16 @@ public class NFCScanner extends Activity implements OnClickListener{
         
     }
     
-    // Change this on Scan. Not on click! 
-    public void onClick(View view) {
+    // exit app
+    public void closeActivity(View view) {
     	
-    	NFCData nfcData = new NFCData();
-    	uploadStatus = nfcData.execute(URL,nfcID,googleAccount);
-    	try {
-			displayStaus(uploadStatus.get());
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ExecutionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+     finish();
     }
     
     @Override
     protected void onResume() {
         super.onResume();
+        
         if (mAdapter != null) {
             if (!mAdapter.isEnabled()) {
             	Toast.makeText(getApplicationContext(), "Enable NFC and Try Again!", Toast.LENGTH_SHORT).show();
@@ -114,7 +102,20 @@ public class NFCScanner extends Activity implements OnClickListener{
         	
         	Tag scannedTag = getIntent().getParcelableExtra(NfcAdapter.EXTRA_TAG);
         	nfcID = getHex(scannedTag.getId());
-            Toast.makeText(getApplicationContext(), "Scanned ID is: "+nfcID, Toast.LENGTH_SHORT).show();
+        	
+        	// Call Data uploader
+        	NFCData nfcData = new NFCData();
+        	uploadStatus = nfcData.execute(URL,nfcID,googleAccount);
+        	try {
+    			displayStaus(uploadStatus.get());
+    		} catch (InterruptedException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		} catch (ExecutionException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+            //Toast.makeText(getApplicationContext(), "Scanned ID is: "+nfcID, Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -3,32 +3,39 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
-    
-     <EditText android:id="@+id/nfcID"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="@string/nfcID" />
-      <EditText android:id="@+id/userName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="@string/userName" />
-       <EditText android:id="@+id/entranceTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="@string/entranceTime" />
- 
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="40dp" >
+    </View>
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="247dp"
+        android:layout_height="117dp"
+        android:layout_gravity="center"
+        android:src="@drawable/clientlogo" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="20dp" >
+    </View>
+
+    <ImageView
+        android:id="@+id/scan"
+        android:layout_width="268dp"
+        android:layout_height="165dp"
+        android:layout_gravity="center"
+        android:layout_weight="0.24"
+        android:src="@drawable/scan" />
+
     <TextView
         android:id="@+id/outputTxt"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:text=""
         android:textColor="#CC0033"
         android:textSize="16sp"
         android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/buttonPost"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/buttonPost" />
- 
 </LinearLayout>
