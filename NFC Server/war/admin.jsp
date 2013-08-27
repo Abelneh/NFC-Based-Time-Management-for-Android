@@ -22,12 +22,24 @@
         	         <H2>Admin Control Page</H2>
         	     </td>
         	</tr>
+        	
+        	<tr>
+				<td align="center"> User Name: </td>
+				<td align="left"><INPUT TYPE="text" name = "userName" VALUE="abelneh@gmail.com"><BR></td>
+   
+			</tr>
 
 			<tr>
 				<td align="center"> <INPUT TYPE="SUBMIT" NAME="Submit" VALUE="Employee Time Sheet"> </td>
 				<td align="center"><INPUT TYPE="Button" VALUE="User Management"><BR></td>
    
 			</tr>
+			<tr>
+        	     <td colspan=2 align="center">
+        	         <H2><a href="simulatePhone.jsp">Phone Simulator</a></H2>
+        	     </td>
+        	</tr>
+			
 			
       </table>
 

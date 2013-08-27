@@ -5,25 +5,23 @@ xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	<servlet>
-		<servlet-name>NFCServer</servlet-name>
-		<servlet-class>com.abel.nfc.NFCServer</servlet-class>
+		<servlet-name>NFCTagServlet</servlet-name>
+		<servlet-class>com.abel.nfcServer.control.NFCTagServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>NFCServer</servlet-name>
+		<servlet-name>NFCTagServlet</servlet-name>
 		<url-pattern>/nfcStore</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>
 		<servlet-name>AdminDataServlet</servlet-name>
-		<servlet-class>com.abel.nfc.AdminDataServlet</servlet-class>
+		<servlet-class>com.abel.nfcServer.control.AdminDataServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>AdminDataServlet</servlet-name>
 		<url-pattern>/nfcRetrieve</url-pattern>
 	</servlet-mapping>
-	
-	
-	
+
 	<welcome-file-list>
 		<welcome-file>admin.jsp</welcome-file>
 	</welcome-file-list>

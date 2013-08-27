@@ -8,28 +8,37 @@
 <link rel="stylesheet" type="text/css" href="main.css">
 </head>
    <body>    
+     <jsp:useBean id="employeeBean" class="com.abel.nfcServer.model.Employee" type="com.abel.nfcServer.model.Employee" scope="application"> 
+        <jsp:getProperty name="employeeBean" property="userName" />
+     </jsp:useBean>
+     <%
+        java.util.Date entranceDate =  new java.util.Date ();//(java.util.Date) application.getAttribute("entranceTime");
+        java.util.Date exitDate =  new java.util.Date ();//(java.util.Date) application.getAttribute("exitTime");
+
+      %>
+
       <table align="center"  width="500px">     
         	<tr>
         	     <td align="center"  colspan=5>
         	         <h2>Overview of Entrance Time</h2>
         	     </td>
-        	</tr>
-        	
+        	</tr>        	
         	<tr>
         	     <td colspan=5>
-        	         <h3>User Name: ${userName}</h3>
+        	         <h3>User Name:  <jsp:getProperty name="employeeBean" property="userName" />  </h3>
         	     </td>
         	</tr>
-
 			<tr>
 			   <td>Entrance Time</td>
 			   <td>Exit Time</td>
 			</tr>
 			<tr>
-			   <td>${entranceTime}</td>
-			   <td>${exitTime}</td>
+			   <td><% out.println(entranceDate.toString()); %> </td>
+			   <td><% out.println(entranceDate.toString()); %> </td>
 			</tr>
 
       </table>
+      
+      
    </body>
 </html>
