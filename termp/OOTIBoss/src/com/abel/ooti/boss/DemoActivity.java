@@ -19,6 +19,7 @@ package com.abel.ooti.boss;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -27,11 +28,25 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.SyncStateContract.Constants;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 
 /**
  * Main UI for the demo app.
@@ -48,7 +63,7 @@ public class DemoActivity extends Activity {
      * Substitute you own sender ID here. This is the project number you got
      * from the API Console, as described in "Getting Started."
      */
-    String SENDER_ID = "79064159497";
+    String SENDER_ID = "998353724956";
 
     /**
      * Tag used on log messages.
@@ -75,7 +90,7 @@ public class DemoActivity extends Activity {
         if (checkPlayServices()) {
             gcm = GoogleCloudMessaging.getInstance(this);
             regid = getRegistrationId(context);
-
+           
             if (regid.isEmpty()) {
                 registerInBackground();
             }
@@ -175,6 +190,7 @@ public class DemoActivity extends Activity {
 
                     // You should send the registration ID to your server over HTTP, so it
                     // can use GCM/HTTP or CCS to send messages to your app.
+                    Log.e(Constants._COUNT, "Before sending to Backend");
                     sendRegistrationIdToBackend();
 
                     // For this demo: we don't need to send it because the device will send
@@ -210,7 +226,7 @@ public class DemoActivity extends Activity {
                     try {
                         Bundle data = new Bundle();
                         data.putString("my_message", "Hello World");
-                        data.putString("my_action", "com.google.android.gcm.demo.app.ECHO_NOW");
+                        data.putString("my_action", "com.abel.ooti.gcm.ECHO_NOW");
                         String id = Integer.toString(msgId.incrementAndGet());
                         gcm.send(SENDER_ID + "@gcm.googleapis.com", id, data);
                         msg = "Sent message";
@@ -264,6 +280,29 @@ public class DemoActivity extends Activity {
      * to a server that echoes back the message using the 'from' address in the message.
      */
     private void sendRegistrationIdToBackend() {
-      // Your implementation here.
+    	 String output = null;
+    	 String registrationUrl = "http://ootigcm.appspot.com/register";
+    	 //String registrationUrl = "http://pcwin1169.campus.tue.nl:8888/register";
+	     try {
+	         DefaultHttpClient httpClient = new DefaultHttpClient();
+	         HttpPost httppost = new HttpPost(registrationUrl);
+	        
+	        ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+	 	    nameValuePairs.add(new BasicNameValuePair("regid", regid));
+	           		      	    
+		     httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+	        
+	         HttpResponse httpResponse = httpClient.execute(httppost);
+	         HttpEntity httpEntity = httpResponse.getEntity();
+	         output = EntityUtils.toString(httpEntity);
+    	    } catch (UnsupportedEncodingException e) {
+    	        e.printStackTrace();
+    	    } catch (ClientProtocolException e) {
+    	        e.printStackTrace(); 
+    	    } catch (IOException e) {
+    	        e.printStackTrace();
+    	    }
+    	
+    	 Log.e(Constants._COUNT, "After sending Registration Id");
     }
 }
