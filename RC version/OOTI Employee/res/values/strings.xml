@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Accessing Servlet from Android</string>
+    <string name="app_name">OOTI Timesheet</string>
+    <string name="button">Invoke Servlet</string>
+    <string name="buttonPost">Invoke by Post</string>
+    <string name="action_settings">Settings</string>
+    
+    <string name="nfcID">NFC ID </string>
+    <string name="userName">user Name</string>
+    <string name="entranceTime">Access Time</string>
+    
+   
+
+</resources>
